@@ -1,6 +1,4 @@
 command:
-books = Book.objects.all()
-for book in books:
-    print (f"{book.title} by {book.author} in {book.publication_year}")
+books = Book.objects.get(title='1984')
 output:
-Nineteen Eighty-Four by George Orwell in 1949
+1984 by George Orwell in 1949

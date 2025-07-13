@@ -1,8 +1,4 @@
 commands:
-new_book.title = 'Nineteen Eighty-Four'
-new_book.save()
-books = Book.objects.all()
-for book in books:
-    print (f"{book.title} by {book.author} in {book.publication_year}")
+book = Book.objects.filter(title='1984').update(title='Nineteen Eighty-Four')
 output:
-Nineteen Eighty-Four by George Orwell in 1949
+nothing, meaning the code is successful
