@@ -8,5 +8,5 @@ books = Library.objects.get(name=library_name)
 print(books.all())
 
 ###Query the librarian of a specific library.
-librarian = Librarian.objects.get(library__name=library_name)
+librarian = Librarian.objects.get(library=library_name)
 print(librarian)
