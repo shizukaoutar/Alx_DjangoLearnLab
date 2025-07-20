@@ -1,7 +1,12 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView
+from . import views
 
+# App-specific URL patterns
 urlpatterns = [
-    path('libraries/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
-    path('books/', list_books, name='book_list'),
+    # Books listing page
+    path('', views.list_books, name='list_books'),
+    path('books/', views.list_books, name='list_books'),
+    
+    # Library detail page
+    path('library//', views.LibraryDetailView.as_view(), name='library_detail'),
 ]
