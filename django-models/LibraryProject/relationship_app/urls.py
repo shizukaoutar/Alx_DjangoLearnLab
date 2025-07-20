@@ -1,8 +1,9 @@
+from django.db.models.functions import Log
 from django.urls import path, include
 from . import views
 from .views import list_books, LibraryDetailView
-from .views import SignUpView
-from django.contrib.auth.views import LoginView, TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
+from .views import register
 
 
 # App-specific URL patterns
@@ -18,7 +19,7 @@ urlpatterns = [
 
     # Authentication URLs
     path('registration/',include('django.contrib.auth.urls')),
-    path('registration/login/', LoginView.as_view(template_name='relationship_app/registration/login.html'), name='login'),
-    path('registration/register/', SignUpView.as_view(template_name='relationship_app/registration/register.html'), name='register'),
-    path('registration/logout/', TemplateView.as_view(template_name='relationship_app/registration/logout.html'), name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('register/', views.register, name='register'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
