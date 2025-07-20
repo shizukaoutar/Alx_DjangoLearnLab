@@ -1,7 +1,7 @@
 books_by_author = Book.objects.filter(author__name='John Doe')
 print(books_by_author)
 
-books = Book.objects.get(libraries__name='Library 1')
+books = Library.objects.get(name='Library 1')
 print(books.all())
 
 
