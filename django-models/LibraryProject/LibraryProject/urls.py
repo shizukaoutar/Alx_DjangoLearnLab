@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from relationship_app.views import book_list, LibraryDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('books/', book_list, name='book_list'),
+    path('libraries/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 ]
