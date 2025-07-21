@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
-
+from django.contrib.auth import views as auth_views
 
 # Create your views here.
 def list_books(request):
@@ -27,29 +27,29 @@ class LibraryDetailView(DetailView):
 
 
 def login_view(request):
-    if request.method == 'POST':
+    return auth_views.LoginView.as_view(template_name='relationship_app/login.html')
+    '''if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('list_books')
+            next_url = request.GET.get('next', 'list_books')
+            return redirect(next_url)
     else:
         form = AuthenticationForm()
-    return render(request, 'relationship_app/registration/login.html', {'form': form})
+    return render(request, 'relationship_app/login.html', {'form': form})'''
     
-
 def logout_view(request):
-    logout(request)
-    return redirect('login')
+    return auth_views.LogoutView.as_view(template_name='relationship_app/logout.html')
 
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect(reverse_lazy('login'))
     else:
         form = UserCreationForm()
         
     context = {'form': form}
-    return render(request, 'relationship_app/registration/register.html', context)    
+    return render(request, 'relationship_app/register.html', context)    
