@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from .models import Library, Book, UserProfile
@@ -30,17 +30,7 @@ class LibraryDetailView(DetailView):
 
 def login_view(request):
     return auth_views.LoginView.as_view(template_name='relationship_app/login.html')
-    '''if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            next_url = request.GET.get('next', 'list_books')
-            return redirect(next_url)
-    else:
-        form = AuthenticationForm()
-    return render(request, 'relationship_app/login.html', {'form': form})'''
-    
+
 def logout_view(request):
     return auth_views.LogoutView.as_view(template_name='relationship_app/logout.html')
 
@@ -79,3 +69,43 @@ def is_member(user):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
+
+
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books')
+    else:
+        form = BookForm()
+    
+    context = {'form': form}
+    return render(request, 'relationship_app/add_book.html', context)
+
+
+@permission_required('relationship_app.can_edit_book', raise_exception=True)
+def edit_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books')
+    else:
+        form = BookForm(instance=book)
+    
+    context = {'form': form}
+    return render(request, 'relationship_app/edit_book.html', context)
+
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, pk):
+   if request.method == 'POST':
+        book = Book.objects.get(pk=pk)
+        book.delete()
+        return redirect('list_books')
+   else:
+       book = Book.objects.get(pk=pk)
+       context = {'book': book}
+       return render(request, 'relationship_app/delete_book.html', context)
