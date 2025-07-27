@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Book
-from .forms import BookForm
+from .forms import ExampleForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import permission_required
 
@@ -8,12 +8,12 @@ from django.contrib.auth.decorators import permission_required
 @permission_required('bookshelf.can_create_book', raise_exception=True)
 def create_book(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('book_list')
     else:
-        form = BookForm()
+        form = ExampleForm()
     
     context = {'form': form}
     return render(request, 'bookshelf/add_book.html', context)
@@ -28,12 +28,12 @@ def book_list(request):
 def edit_book(request, pk):
     book = Book.objects.get(pk=pk)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = ExampleForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
             return redirect('book_list')
     else:
-        form = BookForm(instance=book)
+        form = ExampleForm(instance=book)
     
     context = {'form': form}
     return render(request, 'bookshelf/edit_book.html', context)
