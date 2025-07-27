@@ -12,7 +12,7 @@ def create_book(request):
         form = BookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('list_books')
+            return redirect('book_list')
     else:
         form = BookForm()
     
@@ -20,7 +20,7 @@ def create_book(request):
     return render(request, 'bookshelf/add_book.html', context)
 
 @permission_required('bookshelf.can_view_book', raise_exception=True)
-def list_books(request):
+def book_list(request):
     books = Book.objects.all()
     context = {'books': books}
     return render(request, 'bookshelf/list_books.html', context)
@@ -32,7 +32,7 @@ def edit_book(request, pk):
         form = BookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-            return redirect('list_books')
+            return redirect('book_list')
     else:
         form = BookForm(instance=book)
     
@@ -44,7 +44,7 @@ def delete_book(request, pk):
    if request.method == 'POST':
         book = Book.objects.get(pk=pk)
         book.delete()
-        return redirect('list_books')
+        return redirect('book_list')
    else:
        book = Book.objects.get(pk=pk)
        context = {'book': book}
