@@ -50,7 +50,7 @@ def delete_book(request, pk):
        context = {'book': book}
        return render(request, 'bookshelf/delete_book.html', context)
 
-# Creating permissions
+""" # Creating permissions
 can_view = Permission.objects.get(codename='can_view_book')
 can_create = Permission.objects.get(codename='can_create_book')
 can_edit = Permission.objects.get(codename='can_edit_book')
@@ -65,5 +65,5 @@ Admins = Group.objects.create(name='Admins')
 # Assigning permissions to groups
 Editors.permissions.add(can_create, can_edit, can_delete)
 Viewers.permissions.add(can_view)
-Admins.permissions.add(can_view, can_create, can_edit, can_delete)
+Admins.permissions.add(can_view, can_create, can_edit, can_delete) """
 
