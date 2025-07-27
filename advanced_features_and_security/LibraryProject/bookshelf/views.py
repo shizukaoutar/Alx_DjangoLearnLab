@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import Book
 from .forms import BookForm
 from django.shortcuts import redirect
-from django.contrib.auth.models import Permission, Group
 from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
