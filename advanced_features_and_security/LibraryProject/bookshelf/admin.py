@@ -1,12 +1,13 @@
 from django.contrib import admin
-from .models import Book
+from .models import Book, CustomUser
+from django.contrib.auth.admin import UserAdmin
 
 class BookAdmin(admin.ModelAdmin):
     list_filter = ('author', 'publication_year')
     search_fields = ('title', 'author', 'publication_year')
     
 
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     list_filter = ('email', 'username', 'date_of_birth', 'profile_photo')
     search_fields = ('email', 'username', 'date_of_birth', 'profile_photo')
 

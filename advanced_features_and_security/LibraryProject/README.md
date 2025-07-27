@@ -45,4 +45,10 @@ This is a project for learning django framework
 - Delete book
 - List books
 
+## Security
+- CSP
+- XSS
+- CSRF
+
+
 

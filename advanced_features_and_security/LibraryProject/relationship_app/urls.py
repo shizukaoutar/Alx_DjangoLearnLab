@@ -1,4 +1,3 @@
-from django.db.models.functions import Log
 from django.urls import path, include
 from . import views
 from .views import list_books, LibraryDetailView
