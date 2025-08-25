@@ -1,3 +1,48 @@
 from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Book
+from .serializers import BookSerializer
+from rest_framework import permissions
 
 # Create your views here.
+class ListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['author', 'publication_year']
+    search_fields = ['title', 'author__name']
+
+    ordering_fields = ['publication_year']
+    ordering = ['publication_year'] #default
+
+    pagination_class = PageNumberPagination
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
+class DetailView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class CreateView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class UpdateView(generics.UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer   
+    permission_classes = [permissions.IsAuthenticated]
+
+class DeleteView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
