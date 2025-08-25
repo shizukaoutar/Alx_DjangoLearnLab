@@ -26,6 +26,9 @@ class BookAPITest(APITestCase):
             'author': 'Updated Author',
             'publication_year': 2023,
         })
+
+        self.client.login(username='testuser', password='testpass')
+
         self.assertEqual(response.data['title'], 'Updated Book')
         self.assertEqual(response.data['author'], 'Updated Author')
         self.assertEqual(response.data['publication_year'], 2023)
@@ -34,5 +37,6 @@ class BookAPITest(APITestCase):
 
     def test_delete_book(self):
         response = self.client.delete('/api/books/1/')
+        self.client.login(username='testuser', password='testpass')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
     
