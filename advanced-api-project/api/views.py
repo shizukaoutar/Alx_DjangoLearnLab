@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework
 from .models import Book
@@ -11,7 +12,7 @@ class ListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    filter_backends = [rest_framework.DjangoFilterBackend, rest_framework.SearchFilter, rest_framework.OrderingFilter]
+    filter_backends = [rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['author', 'publication_year']
     search_fields = ['title', 'author__name']
 
