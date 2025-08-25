@@ -14,6 +14,10 @@ class BookAPITest(APITestCase):
             'author': 'Test Author',
             'publication_year': 2022,
         })
+        self.assertEqual(response.data['title'], 'Test Book')
+        self.assertEqual(response.data['author'], 'Test Author')
+        self.assertEqual(response.data['publication_year'], 2022)
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED) 
     
     def test_update_book(self):
@@ -22,6 +26,10 @@ class BookAPITest(APITestCase):
             'author': 'Updated Author',
             'publication_year': 2023,
         })
+        self.assertEqual(response.data['title'], 'Updated Book')
+        self.assertEqual(response.data['author'], 'Updated Author')
+        self.assertEqual(response.data['publication_year'], 2023)
+        
         self.assertEqual(response.status_code, status.HTTP_200_OK)  
 
     def test_delete_book(self):
