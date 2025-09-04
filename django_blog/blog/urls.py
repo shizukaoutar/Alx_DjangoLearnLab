@@ -10,8 +10,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
 
-    path('posts/', views.PostList.as_view(), name='post_list'),
-    path('posts/create/', views.PostCreate.as_view(), name='post_create'),
-    path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name='post_update'),
-    path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
+    path('post/', views.PostList.as_view(), name='post_list'),
+    path('post/new/', views.PostCreate.as_view(), name='post_create'),
+    path('post/<int:pk>/update/', views.PostUpdate.as_view(), name='post_update'),
+    path('post/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
 ]
