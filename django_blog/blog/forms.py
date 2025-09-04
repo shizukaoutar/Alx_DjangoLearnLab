@@ -23,3 +23,9 @@ class CustomRegistrationForm(UserCreationForm):
             user.save()
         return user
         
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+    

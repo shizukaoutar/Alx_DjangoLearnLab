@@ -1,0 +1,35 @@
+<!-- Detail Post -->
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>{{ post.title }}</h2>
+<table>
+    <tr>
+        <th>Author</th>
+        <td>{{ post.author }}</td>
+    </tr>
+    <tr>
+        <th>Published Date</th>
+        <td>{{ post.published_date }}</td>
+    </tr>
+    <tr>
+        <th>Content</th>
+        <td>{{ post.content }}</td>
+    </tr>
+    <tr>
+        <th>Created At</th>
+        <td>{{ post.created_at }}</td>
+    </tr>
+    <tr>
+        <th>Updated At</th>
+        <td>{{ post.updated_at }}</td>
+    </tr>
+    <tr>
+        <th>Actions</th>
+        <td>
+            <a href="{% url 'post_update' post.id %}">Update</a>
+            <a href="{% url 'post_delete' post.id %}">Delete</a>
+        </td>
+    </tr>
+</table>
+{% endblock %}
