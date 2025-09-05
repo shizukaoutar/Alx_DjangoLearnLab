@@ -44,17 +44,17 @@ def logout(request):
 
 ## CRUD operations for Blog posts
 
-class PostList(ListView):
+class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
     success_url = 'post_list'
 
-class PostDetail(DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
 
 
-class PostCreate(CreateView, LoginRequiredMixin, UserPassesTestMixin):
+class PostCreateView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_create.html'
     success_url = reverse_lazy('post_list')
@@ -64,7 +64,7 @@ class PostCreate(CreateView, LoginRequiredMixin, UserPassesTestMixin):
         return super().form_valid(form)
 
 
-class PostUpdate(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class PostUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_update.html'
     success_url = reverse_lazy('post_list')
@@ -73,7 +73,7 @@ class PostUpdate(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-class PostDelete(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('post_list')
@@ -88,22 +88,22 @@ class PostDelete(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
 
 ## CRUD operations for Comments
 
-class CommentList(ListView):
+class CommentListView(ListView):
     model = Comment
     template_name = 'blog/comment_list.html'
     success_url = 'comment_list'
     
-class CommentCreate(CreateView, LoginRequiredMixin, UserPassesTestMixin):
+class CommentCreateView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Comment
     template_name = 'blog/comment_create.html'
     success_url = reverse_lazy('comment_list')
     
-class CommentUpdate(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class CommentUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Comment
     template_name = 'blog/comment_update.html'
     success_url = reverse_lazy('comment_list')
     
-class CommentDelete(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class CommentDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Comment
     template_name = 'blog/comment_delete.html'
     success_url = reverse_lazy('comment_list')
