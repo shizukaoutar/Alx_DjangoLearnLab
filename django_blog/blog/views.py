@@ -125,3 +125,20 @@ def search_posts(request):
     else:
         posts = Post.objects.all()
         return render(request, 'blog/post_list.html', {'posts': posts})
+
+
+## Post by Tags
+
+class PostByTagView(ListView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    success_url = 'post_list'
+    
+    def get_queryset(self):
+        self.tag = get_object_or_404(Tag, name=self.kwargs['tag'])
+        return Post.objects.filter(tags__name__in=[self.tag.name])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
