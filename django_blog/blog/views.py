@@ -84,3 +84,32 @@ class PostDelete(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
             raise Http404("You are not allowed to delete this post")
         return obj
 
+
+
+## CRUD operations for Comments
+
+class CommentList(ListView):
+    model = Comment
+    template_name = 'blog/comment_list.html'
+    success_url = 'comment_list'
+    
+class CommentCreate(CreateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Comment
+    template_name = 'blog/comment_create.html'
+    success_url = reverse_lazy('comment_list')
+    
+class CommentUpdate(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Comment
+    template_name = 'blog/comment_update.html'
+    success_url = reverse_lazy('comment_list')
+    
+class CommentDelete(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Comment
+    template_name = 'blog/comment_delete.html'
+    success_url = reverse_lazy('comment_list')
+    
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.author != self.request.user:
+            raise Http404("You are not allowed to delete this comment")
+        return obj

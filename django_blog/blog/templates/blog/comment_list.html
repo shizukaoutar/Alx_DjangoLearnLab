@@ -1,0 +1,33 @@
+<!--Comment List-->
+{% extends 'blog/base.html' %}
+<h2>Comments</h2>
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Post</th>
+            <th>Content</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td>{{ comment.author }}</td>
+            <td>{{ comment.post }}</td>
+            <td>{{ comment.content }}</td>
+            <td>{{ comment.created_at }}</td>
+            <td>{{ comment.updated_at }}</td>
+            <td>
+                <a href="{% url 'comment_update' comment.id %}">Update</a>
+                <a href="{% url 'comment_delete' comment.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,9 @@
+<!--Comment Delete-->
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete Comment</button>
+</form>
+{% endblock %}
