@@ -25,6 +25,10 @@
         <td>{{ post.updated_at }}</td>
     </tr>
     <tr>
+        <th>Tags</th>
+        <td>{{ post.tags.all }}</td>
+    </tr>
+    <tr>
         <th>Actions</th>
         <td>
             <a href="{% url 'post_update' post.id %}">Update</a>

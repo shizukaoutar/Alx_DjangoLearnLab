@@ -113,3 +113,15 @@ class CommentDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
         if obj.author != self.request.user:
             raise Http404("You are not allowed to delete this comment")
         return obj
+
+
+## Search posts
+
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)).distinct()
+        return render(request, 'blog/post_list.html', {'posts': posts})
+    else:
+        posts = Post.objects.all()
+        return render(request, 'blog/post_list.html', {'posts': posts})
