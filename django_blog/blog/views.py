@@ -129,7 +129,7 @@ def search_posts(request):
 
 ## Post by Tags
 
-class PostByTagView(ListView):
+class PostByTagListView(ListView):
     model = Post
     template_name = 'blog/post_detail.html'
     success_url = 'post_list'
