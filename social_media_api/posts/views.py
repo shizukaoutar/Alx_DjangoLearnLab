@@ -94,7 +94,7 @@ def like_post(request, post_id):
 @permission_classes([permissions.IsAuthenticated])
 
 def unlike_post(request, post_id):
-    post = generics.get_object_or_404(Post, id=post_id)
+    post = generics.get_object_or_404(Post, pk=pk)
     like = Like.objects.filter(user=request.user, post=post)
     if like.exists():
         like.delete()
