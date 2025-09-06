@@ -49,3 +49,15 @@ class CommentView(viewsets.ModelViewSet):
                 notification_type='comment',
                 target=post 
             ) """
+
+
+
+class FeedView(ListView):
+    serializer_class = PostSerializer
+    permissions_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
+
+    def get_queryset(self):
+        return Post.objects.filter(author__in=self.request.user.following.all())
+
+

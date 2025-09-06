@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 
+from advanced_features_and_security.LibraryProject.bookshelf.models import CustomUser
+
 from .models import CustomUserModel
 from .serializers import CustomUserSerializer, LoginSerializer
 
@@ -35,3 +37,37 @@ class LoginView(APIView):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
         
     
+
+class FollowUserView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request, user_id):
+        try:
+            user_to_follow = CustomUser.objects.get(id=user_id)
+
+            if request.user != user_to_follow:
+                request.user.following.add(user_to_follow)
+                return Response({"message": "User followed successfully"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "You cannot follow yourself"}, status=status.HTTP_400_BAD_REQUEST)
+        except CustomUser.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class UnfollowUserView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request, user_id):
+        try:
+            user_to_unfollow = CustomUser.objects.get(id=user_id)
+
+            if request.user != user_to_unfollow:
+                request.user.following.remove(user_to_unfollow)
+                return Response({"message": "User unfollowed successfully"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "You cannot unfollow yourself"}, status=status.HTTP_400_BAD_REQUEST)
+        except CustomUser.DoesNotExist:
+            return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
