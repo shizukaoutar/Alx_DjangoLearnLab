@@ -11,6 +11,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('feed/', FeedView.as_view(), name='feed'),
 
-    path('posts/<int:post_id>/like/', like_post, name='like-post'),
-    path('posts/<int:post_id>/unlike/', unlike_post, name='unlike-post'),
+    path('posts/<int:pk>/like/', like_post, name='like-post'),
+    path('posts/<int:pk>/unlike/', unlike_post, name='unlike-post'),
 ]
